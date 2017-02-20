@@ -230,7 +230,7 @@
             }
             input.nodes.root = input.nodes.root || this.getDefaultValue('nodes_root', 'body');
             input.nodes.selector = input.nodes.selector ||
-                this.getDefaultValue('nodes_selector', 'a,button,input,select,textarea');
+                this.getDefaultValue('nodes_selector', '[id]');
             input.nodes.visibility = input.nodes.visiblity ||
                 this.getDefaultValue('nodes_visibility', root.VISIBILITIES.ALL);
 

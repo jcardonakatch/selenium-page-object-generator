@@ -557,21 +557,15 @@ window.POG=(function() {
         var definitions = [];
         var root = document.querySelector(input.nodes.root) || document; // gets the element root from which is going to be selected the rest of the nodes
         //var nodes = (root) ? root.querySelectorAll(input.nodes.selector) : []; // gets all the nodes from root according to desired tags within input.nodes.selector
-        var nodes = (root) ? root.querySelectorAll("[id]") : []; // gets all the nodes from root according to desired tags within input.nodes.selector
+        var nodes = (root) ? root.querySelectorAll(input.nodes.selector) : []; // gets all the nodes from root according to desired tags within input.nodes.selector
         var type = {}.toString.call(nodes);
         if (!(type === '[object NodeList]' || type === '[object Object]')) { //validates all went as expected :)
             input.definitions = definitions;
             return input;
         }
 
-        var firsts = {};
-        var hasField = false;
-        var index = -1;
-        var longestName = 0;
-        var submit = { label: '', text: '' };
+       var index = -1;
         var tags = document.getElementsByTagName('*');
-        var texts = {};
-        var unsets = {};
         var visibleOnly = (parseInt(input.nodes.visibility) === VISIBILITIES.VISIBLE);
 
         for (var i = 0, j = nodes.length; i < j; i++) {
@@ -582,7 +576,6 @@ window.POG=(function() {
             if ((visibleOnly && node.offsetHeight > 0) || !visibleOnly) {
                 var action = '';
                 var hasArgument = false;
-                var hasUnset = false;
                 var label = '';
                 var locator = getLocator(node, input.nodes.angular);
                 var text = node.textContent || node.innerText || '';
@@ -619,12 +612,16 @@ window.POG=(function() {
         return input;
     }
 
+    /**
+     * This weird ass looking function replaces all the hyphens "-" for
+     * dollar signs "$". This is because HTML id's can not have (in theory)
+     * dollar signs, and groovy/java can not jave hyphens in their variables.
+     * So we make sure there are not going to be IDs duplicated, unless there are
+     * duplicated IDs in the HTML.
+     **/
     function getProperId(value){
-        console.log("value before: '" + value + "'");
         var str = value.charAt(0).toLowerCase() + value.substr(1);
-        str = str.replace(/-/g,'$');
-        console.log("value before: '" + str + "'");
-        return str;
+        return str.replace(/-/g,'$');
     }
 
     //** =====================================================================
