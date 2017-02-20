@@ -128,7 +128,7 @@ Handlebars.registerHelper('unequals', function(operand1, operand2, options) {
  * attributes so we can make sure that we are not going to have duplicated IDs
  **/
 Handlebars.registerHelper('idvalid', function (str) {
-    str = str.charAt(0).toLowerCase() + str.substr(1);
-    return str.replace('-','$');
+    str = str.charAt(0).toUpperCase() + str.substr(1);
+    return str;
 });
 

@@ -592,341 +592,39 @@ window.POG=(function() {
                     buffer.attribute.strategy = locator.strategy;
                     buffer.attribute.value = locator.value;
                     buffer.sourceIndex = node.sourceIndex || [].indexOf.call(tags, node);
+                    buffer.attribute.idforgroovy = getProperId(locator.value);
 
-                    /**
-                     * //jcardona. Adds operations according to the type of element that it is.
-
-                    switch(node.nodeName) {
-                        case 'A':
-                            action = 'Click';
-                            buffer.type = 'link';
-                            label = 'Link';
-                            text = text || getLinkText(node);
-
-                            if (submit.text === '' && text.toLowerCase().indexOf('submit') > -1) {
-                                submit.label = label;
-                                submit.text = text;
-                            }
-                            break;
-                        case 'BUTTON':
-                            action = 'Click';
-                            buffer.type = 'button';
-                            label = 'Button';
-
-                            if (submit.text === '' && ((node.type || '').toLowerCase() === 'submit' ||
-                                    text.toLowerCase().indexOf('submit') > -1)) {
-                                submit.label = label;
-                                submit.text = text;
-                            }
-                            break;
-                        case 'INPUT':
-                            var inputType = node.type || '';
-
-                            if ('|button|image|submit|'.indexOf('|' + inputType + '|') > -1) {
-                                action = 'Click';
-                                buffer.type = 'button';
-                                label = 'Button';
-                                text = text || node.value || getNodeText(node);
-
-                                if (inputType === 'submit') {
-                                    submit.label = label;
-                                    submit.text = text;
-                                }
-                                else if (submit.text === '' && text.toLowerCase().
-                                    indexOf('submit') > -1) {
-                                        submit.label = label;
-                                        submit.text = text;
-                                    }
-                            }
-                            else {
-                                if (inputType === 'hidden') {
-                                    break;
-                                }
-                                else if (inputType === 'checkbox') {
-                                    hasUnset = true;
-                                }
-                                else if ('|email|number|password|radio|search|tel|text|url|'.
-                                        indexOf('|' + inputType + '|') > -1) {
-                                    hasArgument = true;
-                                }
-
-                                label = getLetter(inputType, LETTERS.PROPER);
-                                text = text || getNodeText(node);
-
-                                if (inputType === 'radio') {
-                                    label = 'Radio Button';
-                                    if (buffer.attribute.strategy !== 'name' && node.name) {
-                                        buffer.attribute.strategy = 'name';
-                                        buffer.attribute.value = node.name;
-                                    }
-
-                                    var radioValueBuffer = {
-                                        attribute: {
-                                            name: getLetter(getSanitizedText(text, 6) + ' Value',
-                                                input.attributes.letter),
-                                            value: node.value
-                                        },
-                                        operation: {},
-                                        sourceIndex: -1,
-                                        type: 'radio.value'
-                                    };
-
-                                    // faster array push
-                                    definitions[++index] = radioValueBuffer;
-
-                                    longestName = getLongestName(radioValueBuffer.attribute.name,
-                                        longestName);
-                                }
-
-                                if ('|email|number|password|search|tel|url|'.
-                                        indexOf('|' + inputType + '|') > -1) {
-                                    inputType = 'text';
-                                }
-
-                                action = 'Set';
-                                buffer.type = inputType;
-                            }
-                            break;
-                        case 'SELECT':
-                            action = 'Set';
-                            buffer.type = 'select';
-                            hasArgument = true;
-                            hasUnset = true;
-                            label = 'Drop Down List';
-                            text = getNodeText(node);
-                            break;
-                        case 'TEXTAREA':
-                            action = 'Set';
-                            buffer.type = 'text';
-                            hasArgument = true;
-                            label = 'Textarea';
-                            text = getNodeText(node);
-                            break;
-                    }
+                    /** //jcardona. Adds operations according to the type of element that it is.
                      */
-                    var fullText = getSanitizedText(text);
-                    text = getSanitizedText(text, 6);
 
-                    if (text !== '') {
-                        //jcardona manage of text within elements. idc about it.
-                        /*if (texts[text]) {
-                            texts[text]++;
-
-                            if (texts[text] === 2) {
-                                var firstText = text + ' 1';
-
-                                // need to adjust the first entry and make it as part of the group
-
-                                definition = getDefinition({
-                                    action: action,
-                                    buffer: definitions[firsts[text]],
-                                    fullText: fullText,
-                                    hasArgument: hasArgument,
-                                    label: label,
-                                    letters: {
-                                        attribute: input.attributes.letter,
-                                        operation: input.operations.letter
-                                    },
-                                    text: firstText
-                                });
-
-                                definitions[firsts[text]] = definition;
-
-                                if (hasUnset) {
-                                    definition = getDefinition({
-                                        action: action,
-                                        buffer: definitions[unsets[text]],
-                                        fullText: fullText,
-                                        hasArgument: hasArgument,
-                                        label: label,
-                                        letters: {
-                                            attribute: input.attributes.letter,
-                                            operation: input.operations.letter
-                                        },
-                                        negate: hasUnset,
-                                        text: firstText
-                                    });
-
-                                    definitions[unsets[text]] = definition;
-                                }
-                            }
-
-                            text = text + ' ' + texts[text];
-                        }
-                        else {
-                            firsts[text] = index + 1;
-                            texts[text] = 1;
-
-                            if (hasUnset) {
-                                unsets[text] = index + 2;
-                            }
-                        }*/
-
-                        definition = getDefinition({
-                            action: action,
-                            buffer: buffer,
-                            fullText: fullText,
-                            hasArgument: hasArgument,
-                            label: label,
-                            letters: {
-                                attribute: input.attributes.letter,
-                                operation: input.operations.letter
-                            },
-                            text: text
-                        });
-
-                        // faster array push
-                        definitions[++index] = definition;
-
-                        longestName = getLongestName(definition.attribute.name, longestName);
-
-                        if (hasUnset) {
-                            definition = getDefinition({
-                                action: action,
-                                buffer: buffer,
-                                fullText: fullText,
-                                hasArgument: hasArgument,
-                                label: label,
-                                letters: {
-                                    attribute: input.attributes.letter,
-                                    operation: input.operations.letter
-                                },
-                                negate: hasUnset,
-                                text: text
-                            });
-
-                            // faster array push
-                            definitions[++index] = definition;
-                        }
-
-                        if (!hasField && action === 'Set') {
-                            hasField = true;
-                        }
-                    }
                 }
-            }else{ console.log("nodo botado");}
+            }
+
+            definition = getDefinition({
+                action: action,
+                buffer: buffer,
+                hasArgument: hasArgument,
+                label: label,
+                letters: {
+                    attribute: input.attributes.letter,
+                    operation: input.operations.letter
+                }
+            });
+            definitions[++index] = definition;
 
         }
 
-        // operation extras
-        //jcardona idc about autofilling()
-        /*if (hasField && input.operations.extras.fill) {
-            var buffer = {
-                attribute: {},
-                operation: {
-                    documentation: 'Fill every fields in the page.',
-                    name: getLetter('Fill', input.operations.letter)
-                },
-                negate: true,
-                sourceIndex: -1,
-                type: 'fill'
-            };
-
-            // faster array push
-            definitions[++index] = buffer;
-        }*/
-
-        //jcardona idc about autofilling()
-        // if (hasField && submit.text !== '' && input.operations.extras['fill.submit']) {
-        //     var buffer = {
-        //         attribute: {},
-        //         operation: {
-        //             documentation: 'Fill every fields in the page and submit it to target page.',
-        //             name: getLetter('Fill And Submit', input.operations.letter)
-        //         },
-        //         negate: true,
-        //         sourceIndex: -1,
-        //         target: {
-        //             modelName: input.model.target
-        //         },
-        //         type: 'fill.submit'
-        //     };
-        //
-        //     // faster array push
-        //     definitions[++index] = buffer;
-        // }
-
-
-        //jcardona extra operations are not needed
-        /*if (submit.text !== '' && input.operations.extras.submit) {
-            var buffer = {
-                attribute: {},
-                operation: {
-                    documentation: 'Submit the form to target page.',
-                    name: getLetter('Submit', input.operations.letter)
-                },
-                negate: true,
-                sourceIndex: -1,
-                target: {
-                    modelName: input.model.target,
-                    name: getLetter('Click ' + getSanitizedText(submit.text) + ' ' +
-                        submit.label, input.operations.letter)
-                },
-                type: 'submit'
-            };
-
-            // faster array push
-            definitions[++index] = buffer;
-        }*/
-
-        //jcardona extra operations are not needed
-        /*if (input.operations.extras['verify.loaded']) {
-            var sourceText = getPageVisibleHTML();
-            sourceText = sourceText.replace(/(<([^>]+)>)/gi, '\n');
-            var sentences = getSentences(sourceText);
-            var words = getWordFrequency(sourceText);
-            sentences = getSentenceFrequency(sentences, words);
-            var sentence = sentences[0] || '';
-
-            // !robot
-            if (input.attributes.letter !== LETTERS.LOWER && input.attributes.indent !== 1 &&
-                    input.attributes.separator !== '') {
-                sentence = sentence.replace(/"/g, '\\"');
-            }
-
-            var buffer = {
-                attribute: {
-                    name: getLetter('Page Loaded Text', input.attributes.letter),
-                    value: sentence
-                },
-                operation: {
-                    documentation: 'Verify that the page loaded completely.',
-                    name: getLetter('Verify Page Loaded', input.operations.letter)
-                },
-                sourceIndex: -1,
-                type: 'verify.loaded'
-            };
-
-            // faster array push
-            definitions[++index] = buffer;
-        }*/
-
-        //jcardona this operation is awful
-        /*if (input.operations.extras['verify.url']) {
-            // it's better to generate more information than less
-            var uri = location.href.replace(document.location.origin, '');
-
-            var buffer = {
-                attribute: {
-                    name: getLetter('Page Url', input.attributes.letter),
-                    value: uri
-                },
-                operation: {
-                    documentation: 'Verify that current page URL matches the expected URL.',
-                    name: getLetter('Verify Page Url', input.operations.letter)
-                },
-                sourceIndex: -1,
-                type: 'verify.url'
-            };
-
-            // faster array push
-            definitions[++index] = buffer;
-        }*/
-
-        //input.attributes.longestName = longestName;
 
         input.definitions = definitions;
         return input;
+    }
+
+    function getProperId(value){
+        console.log("value before: '" + value + "'");
+        var str = value.charAt(0).toLowerCase() + value.substr(1);
+        str = str.replace(/-/g,'$');
+        console.log("value before: '" + str + "'");
+        return str;
     }
 
     //** =====================================================================
