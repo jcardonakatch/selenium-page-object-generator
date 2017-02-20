@@ -9,7 +9,7 @@ Selenium Page Object Generator is also available in command line by installing [
 
 The template is using [Handlebars.js](http://handlebarsjs.com/) expression, a clean logic-less semantic templating language.
 
-This is an early BETA release, it expected to have rough edges, and limited functionality. It currently support 3 different targets: [Java](https://en.wikipedia.org/wiki/Java_(programming_language)), [C#](https://en.wikipedia.org/wiki/C_Sharp_(programming_language)), and [Robot Framework](http://robotframework.org/).
+This is an early BETA release, it expected to have rough edges, and limited functionality. It currently support 4 different targets: [Java](https://en.wikipedia.org/wiki/Java_(programming_language)), [C#](https://en.wikipedia.org/wiki/C_Sharp_(programming_language)), [Robot Framework](http://robotframework.org/), and [Groovy](https://en.wikipedia.org/wiki/Groovy_(programming_language))
 
 For more information on how to use the generated Page Object file:
 
@@ -19,15 +19,18 @@ C#: [http://relevantcodes.com/pageobjects-and-pagefactory-design-patterns-in-sel
 
 Robot Framework: [http://robotframework.org/robotframework/latest/RobotFrameworkUserGuide.html#taking-resource-files-into-use](http://robotframework.org/robotframework/latest/RobotFrameworkUserGuide.html#taking-resource-files-into-use)
 
-(You need to use Chrome 40+ or Opera 15+ or Node.JS 5.x to try this out)
+(You need Node.JS 5.x to try this out)
 
 Installation
 -
 
-- Install *node.js* and *npm*. Be sure to have node.js version 6+. On GNU/Linux repositories can be outdated so a simple ```apt-get install``` might not be enough to get the right version. 
+- Install *node.js* and *npm*. Be sure to have node.js version 5+. On GNU/Linux repositories can be outdated so a simple ```apt-get install``` might not be enough to get the right version. 
 - Clone the repo.
 - Open a terminal/cdm.
-- In the terminal go to the repo directory that you just cloned.
+- In the terminal go to the repo directory that you just cloned. For example on Windows:
+```bash
+$ cd "C:\Projects\GIT\selenium-page-object-generator\develop" )
+```
 - Run the following command:
 ```bash
 $ npm install
@@ -54,8 +57,10 @@ Examples
 To generate Java page object:
 
 ```bash
-$ node_modules/.bin/selenium-page-object-generator -t java -n MySite -s source.html
+$ cd "GENERATOR_PATH"
+$ node .\bin\generate.js -t groovy -s .\examples\obamaform.html -n ObamaFormPageObject
 ```
+Where "GENERATOR_PATH" is the path where you cloned the repo (eg. "C:\Projects\GIT\selenium-page-object-generator\develop")
 
 Development Dependencies
 -
@@ -99,7 +104,7 @@ That's it! Thank you for your contribution!
 
 License
 -
-Copyright (c) 2015, 2016 Richard Huang.
+Copyright (c) 2015, 2016, 2017 Richard Huang.
 
 This browser extension is free software, licensed under: [GNU Affero General Public License (AGPL-3.0)](http://www.gnu.org/licenses/agpl-3.0.en.html).
 
