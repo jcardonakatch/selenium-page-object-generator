@@ -28,13 +28,15 @@ Robot Framework: [http://robotframework.org/robotframework/latest/RobotFramework
 Installation
 -
 
-- To install the newest released version on Chrome browser, please download it from [Chrome web store](https://chrome.google.com/webstore/detail/epgmnmcjdhapiojbohkkemlfkegmbebb).
-- To install the newest released version on Opera browser, please download it from [Opera addons catalog](https://addons.opera.com/en/extensions/details/selenium-page-object-generator).
-- To install the newest released version on command line, please install [Node.js](https://nodejs.org/) and run command below:
-
+- Install *node.js* and *npm*. Be sure to have node.js version 6+. On GNU/Linux repositories can be outdated so a simple ```apt-get install``` might not be enough to get the right version. 
+- Clone the repo.
+- Open a terminal/cdm.
+- In the terminal go to the repo directory that you just cloned.
+- Run the following command:
 ```bash
-$ npm install selenium-page-object-generator
+$ npm install
 ```
+ This will install all the necesary modules required on the package.json file. 
 
 Command Line Usage
 -
@@ -45,7 +47,7 @@ selenium-page-object-generator [options]
 
   -h, --help                                 Show this help message and exit.
   -v, --version                              Show program's version number and exit.
-  -t, --target {cs,java,robot}               Generator target
+  -t, --target {cs,java,robotm, groovy}      Generator target
   -n, --name [PageName]                      Page name (no-spaces)
   -d, --destination [DestinationPageName]    Destination page name (no-spaces) (optional)
   -s, --source [source.html]                 Source file
@@ -113,6 +115,3 @@ Licenses and Acknowledgements for Incorporated Software
 - [Handlebars](http://handlebarsjs.com/) is an [open source](http://opensource.org) software provided under [MIT license](http://opensource.org/licenses/MIT).
 - [jQuery](https://jquery.com/) is an [open source](http://opensource.org) software provided under [MIT license](http://opensource.org/licenses/MIT).
 
-Screenshot
--
-![screenshot](/images/screenshot-opera-1.png)
