@@ -1,7 +1,3 @@
-<a target="_blank" href="https://chrome.google.com/webstore/detail/epgmnmcjdhapiojbohkkemlfkegmbebb">![Install from Chrome Web Store](/images/chrome-web-store.png "Click here to install this extension from the Chrome Web Store")</a>
-<a target="_blank" href="https://addons.opera.com/en/extensions/details/selenium-page-object-generator">![Install from Opera Addons Catalog](/images/opera-addons-catalog.png "Click here to install this extension from the Opera Addons Catalog")</a>
-
-
 Selenium Page Object Generator
 ==============================
 
