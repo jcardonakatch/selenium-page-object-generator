@@ -29,7 +29,7 @@ Installation
 - Open a terminal/cdm.
 - In the terminal go to the repo directory that you just cloned. For example on Windows:
 ```bash
-$ cd "C:\Projects\GIT\selenium-page-object-generator\develop" )
+$ cd "C:\Projects\GIT\selenium-page-object-generator\develop" 
 ```
 - Run the following command:
 ```bash
